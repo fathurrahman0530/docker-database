@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+    # mysql
+    db57:
+      image: mysql:5.7
+      platform: linux/x86_64
+      container_name: mysql57-development
+      restart: unless-stopped
+      environment:
+        MYSQL_DATABASE: ${DB_DATABASE:-db_example}
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      volumes:
+        - ./.docker/mysql/dbdata:/var/lib/mysql
+      ports:
+        - "3312:3306"
+      networks:
+        - development-old-network
+
+networks:
+  development-old-network:
+    external: true
