@@ -49,9 +49,3 @@ networks:
 volumes:
   postgredev:
   mongodev:
-
-  db.createUser({
-user: “development”,
-pwd: “secret”,
-roles: [ { role: "root", db: "admin" } ]
-});
