@@ -1,4 +1,3 @@
-version: "3.8"
 
 services:
     # mysql
@@ -13,20 +12,20 @@ services:
       volumes:
         - ./.docker/mysql/dbdata:/var/lib/mysql
       ports:
-        - "3311:3306"
+        - "3002:3306"
       networks:
         - development-network
 
     # postgres
     postgres:
-      image: postgres:15
+      image: postgres:15-alpine
       container_name: postgres-development
       environment:
         POSTGRES_DB: laravel
         POSTGRES_USER: laravel_user
         POSTGRES_PASSWORD: secret
       ports:
-        - "6222:5432"
+        - "6001:5432"
       volumes:
         - postgredev:/var/lib/postgresql/data
       networks:
@@ -34,7 +33,7 @@ services:
 
     # mongo
     mongo:
-      image: mongo:6
+      image: mongo:8.0.4-noble
       container_name: mongo-development
       ports:
         - "21011:27017"
@@ -50,3 +49,9 @@ networks:
 volumes:
   postgredev:
   mongodev:
+
+  db.createUser({
+user: “development”,
+pwd: “secret”,
+roles: [ { role: "root", db: "admin" } ]
+});
